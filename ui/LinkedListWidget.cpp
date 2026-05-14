@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QFont>
 
+// CONSTRUCTOR
+// Inicializa el estado interno y conecta el timer a su slot
 LinkedListWidget::LinkedListWidget(QWidget* parent)
     : QWidget(parent), ll(nullptr), highlightedVal(-1),
     highlightActive(false), animOffset(1.0f)
@@ -12,6 +14,8 @@ LinkedListWidget::LinkedListWidget(QWidget* parent)
             this, &LinkedListWidget::onAnimationTick);
 }
 
+// SETLIST
+// Actualiza la referencia y reinicia la animación
 void LinkedListWidget::setList(LinkedList* list) {
     ll = list;
     animOffset = 0.0f;
@@ -19,6 +23,8 @@ void LinkedListWidget::setList(LinkedList* list) {
     update();
 }
 
+// HIGHLIGHT
+// Resalta / Quita resaltado de un nodo
 void LinkedListWidget::highlightNode(int val) {
     highlightedVal = val;
     highlightActive = true;
@@ -30,6 +36,8 @@ void LinkedListWidget::clearHighlight() {
     update();
 }
 
+// ANIMACIÓN
+// Avanza animOffset hasta 1.0 y detiene el timer
 void LinkedListWidget::onAnimationTick() {
     if (animOffset < 1.0f) {
         animOffset += 0.06f;
@@ -41,6 +49,8 @@ void LinkedListWidget::onAnimationTick() {
     }
 }
 
+// PAINTEVENT
+// Dibuja toda la lista nodo a nodo
 void LinkedListWidget::paintEvent(QPaintEvent*) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
@@ -67,7 +77,7 @@ void LinkedListWidget::paintEvent(QPaintEvent*) {
         bool isTail = (curr->next == nullptr);
         bool isHighlighted = (highlightActive && curr->data == highlightedVal);
 
-        // Colores kawaii
+        // Colores pasteles
         QColor nodeColor = isHighlighted ? QColor("#f0a0b8")
                            : isHead        ? QColor("#c8a8f0")
                            : isTail        ? QColor("#a8d8c8")

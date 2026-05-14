@@ -1,6 +1,7 @@
 #include "LinkedList.h"
 #include <iostream>
 
+// CONSTRUCTOR / DESTRUCTOR
 LinkedList::LinkedList() :
     head(nullptr), _size(0) {}
 
@@ -8,6 +9,8 @@ LinkedList::~LinkedList() {
     clear();
 }
 
+// INSERCIÓN
+// Crea un nodo y lo coloca al frente
 void LinkedList::insertAtHead(int val) {
     Node* newNode = new Node(val);
     newNode->next = head;
@@ -15,6 +18,7 @@ void LinkedList::insertAtHead(int val) {
     _size++;
 }
 
+// Recorre hasta el último nodo y enlaza el nuevo al final
 void LinkedList::insertAtTail(int val) {
     Node* newNode = new Node(val);
 
@@ -30,6 +34,7 @@ void LinkedList::insertAtTail(int val) {
     _size++;
 }
 
+// Inserta en una posición arbitraria
 void LinkedList::insertAt(int index, int val) {
     if (index <= 0) {
         insertAtHead(val);
@@ -49,6 +54,8 @@ void LinkedList::insertAt(int index, int val) {
     _size++;
 }
 
+// ELIMINACIÓN
+// Busca el valor y reelanza los punteros vecinos
 bool LinkedList::remove(int val) {
     if (!head) {
         return false;
@@ -78,19 +85,25 @@ bool LinkedList::remove(int val) {
     return true;
 }
 
+// BÚSQUEDA
+// Recorrido lineal O(n)
 bool LinkedList::search(int val) {
     Node* curr = head;
 
     while (curr) {
-        if (curr->data == val) return true;
+        if (curr->data == val) {
+            return true;
+        }
         curr = curr->next;
     }
     return false;
 }
 
+// UTILIDADES
+// Imprime la lista en consola
 void LinkedList::traverse() {
     if (!head) {
-        std::cout << "nullptr (lista vacia)\n";
+        std::cout << "nullptr (lista vacia)" << std::endl;
         return;
     }
 
@@ -102,9 +115,10 @@ void LinkedList::traverse() {
         if (curr->next) std::cout << " -> ";
         curr = curr->next;
     }
-    std::cout << " -> nullptr\n";
+    std::cout << " -> nullptr" << std::endl;
 }
 
+// Libera cada nodo uno a uno y reinicia el contador
 void LinkedList::clear() {
     while (head) {
         Node* temp = head;
@@ -114,6 +128,7 @@ void LinkedList::clear() {
     _size = 0;
 }
 
+// ACCESORES
 Node* LinkedList::getHead() const {
     return head;
 }

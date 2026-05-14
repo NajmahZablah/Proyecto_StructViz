@@ -3,6 +3,8 @@
 #include "../logic/LinkedList.h"
 #include "LinkedListWidget.h"
 
+// VENTANA PRINCIPAL
+// Conecta la lógica con la UI
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,6 +17,7 @@ public:
     ~MainWindow();
 
 private slots:
+    // -Slots conectados a cada botón del .ui-
     void on_btnInsertHead_clicked();
     void on_btnInsertTail_clicked();
     void on_btnInsertAt_clicked();
@@ -26,6 +29,7 @@ private:
     Ui::MainWindow* ui;
     LinkedList* list;
 
+    // -Helpers-
     void refreshList();
     void setStatus(const QString& msg, bool ok = true);
 };

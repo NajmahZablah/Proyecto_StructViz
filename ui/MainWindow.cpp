@@ -2,6 +2,8 @@
 #include "ui_MainWindow.h"
 #include <QTimer>
 
+// CONSTRUCTOR
+// Inicializa la UI generada por Qt Designer
 MainWindow::MainWindow(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::MainWindow)
@@ -10,7 +12,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
     setWindowTitle("StructViz");
 
-    // ── Stylesheet kawaii ──────────────────────────────
+    // Stylesheet
     setStyleSheet(R"(
         QDialog {
             background-color: #ede6f5;
@@ -105,18 +107,20 @@ MainWindow::MainWindow(QWidget* parent)
             padding: 7px 11px 5px 13px;
         }
     )");
-    // ──────────────────────────────────────────────────
 
     refreshList();
 }
 
+// DESTRUCTOR
+// Libera la UI generada y la lista lógica
 MainWindow::~MainWindow() {
     delete ui;
     delete list;
 }
 
+// REFRESHLIST
+// Sincroniza el widget visual con el estado actual de la lista
 void MainWindow::refreshList() {
-    // Castea el displayBox al widget personalizado y actualiza
     LinkedListWidget* w = qobject_cast<LinkedListWidget*>(ui->displayBox);
     if (w) w->setList(list);
 
@@ -129,6 +133,9 @@ void MainWindow::refreshList() {
                              .arg(list->size() == 1 ? "" : "s"));
 }
 
+// SETSTATUS
+// Muestra un mensaje en lblStatus
+// verde = exitosa, rojo = NO exitosa
 void MainWindow::setStatus(const QString& msg, bool ok) {
     ui->lblStatus->setText(msg);
     ui->lblStatus->setStyleSheet(
@@ -137,6 +144,7 @@ void MainWindow::setStatus(const QString& msg, bool ok) {
         );
 }
 
+// SLOTS DE BOTONES
 void MainWindow::on_btnInsertHead_clicked() {
     bool ok;
     int val = ui->inputValue->text().toInt(&ok);
