@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "ui/MainWindow.h"
 
-// PUNTO DE ENTRADA
+// PUNTO DE ENTRADA :b
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     MainWindow w;

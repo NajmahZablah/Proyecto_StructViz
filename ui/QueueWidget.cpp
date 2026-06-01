@@ -1,82 +1,78 @@
-#include "LinkedListWidget.h"
+#include "QueueWidget.h"
 #include <QPainter>
 #include <QFont>
 
 // CONSTRUCTOR
-LinkedListWidget::LinkedListWidget(QWidget* parent)
-    : QWidget(parent), ll(nullptr), highlightedVal(-1),
-    highlightActive(false)
+QueueWidget::QueueWidget(QWidget* parent)
+    : QWidget(parent), q(nullptr), highlightedVal(-1), highlightActive(false)
 {
     setMinimumHeight(120);
 }
 
-// SETLIST
-void LinkedListWidget::setList(LinkedList* list) {
-    ll = list;
+// SETQUEUE
+void QueueWidget::setQueue(Queue* queue) {
+    q = queue;
     update();
 }
 
 // HIGHLIGHT
-void LinkedListWidget::highlightNode(int val) {
+void QueueWidget::highlightNode(int val) {
     highlightedVal = val;
     highlightActive = true;
     update();
 }
 
-void LinkedListWidget::clearHighlight() {
+void QueueWidget::clearHighlight() {
     highlightActive = false;
     update();
 }
 
 // PAINTEVENT
-void LinkedListWidget::paintEvent(QPaintEvent*) {
+void QueueWidget::paintEvent(QPaintEvent*) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
 
     // Fondo
-    p.fillRect(rect(), QColor("#ece4fa"));
+    p.fillRect(rect(), QColor("#f0fff8"));
 
-    if (!ll || !ll->getHead()) {
-        p.setPen(QColor("#a090c0"));
+    if (!q || q->isEmpty()) {
+        p.setPen(QColor("#70a890"));
         p.setFont(QFont("Segoe UI", 11));
-        p.drawText(rect(), Qt::AlignCenter, "Lista vacía  →  nullptr");
+        p.drawText(rect(), Qt::AlignCenter, "Queue vacía  →  nullptr");
         return;
     }
 
-    Node* curr = ll->getHead();
+    Node* curr = q->getFront();
+    Node* back = q->getBack();
     int x = START_X;
-    int i = 0;
 
     while (curr) {
-        bool isHead = (i == 0);
-        bool isTail = (curr->next == nullptr);
+        bool isFront = (curr == q->getFront());
+        bool isBack = (curr == back);
         bool isHighlighted = (highlightActive && curr->value == highlightedVal);
 
-        // Colores - paleta monocromática morada
+        // Colores - paleta monocromática verde
         QColor nodeColor = isHighlighted ? QColor("#f0a0b8")
-                           : isHead ? QColor("#9b72d0")
-                           : isTail ? QColor("#d8c8f5")
-                                    : QColor("#b89ee0");
+                           : isFront ? QColor("#3aaa70")
+                           : isBack ? QColor("#c0ecd8")
+                                    : QColor("#78c8a0");
         QColor borderColor = isHighlighted ? QColor("#d06080")
-                             : isHead ? QColor("#6a42a8")
-                             : isTail ? QColor("#a888d0")
-                                      : QColor("#8060b8");
+                             : isFront ? QColor("#207848")
+                             : isBack ? QColor("#60a880")
+                                      : QColor("#3a8858");
         QColor textColor = isHighlighted ? QColor("#803050")
-                           : isHead ? QColor("#ffffff")
-                           : isTail ? QColor("#5a3f8a")
+                           : isFront ? QColor("#ffffff")
+                           : isBack ? QColor("#205040")
                                     : QColor("#ffffff");
 
-        // Etiqueta head / tail / head+tail (nodo único)
-        if (isHead || isTail) {
-            bool isBoth = isHead && isTail;
-            QColor labelColor = isBoth ? QColor("#5a3f8a")
-                                : isHead ? QColor("#7050b0")
-                                         : QColor("#307060");
+        // Etiqueta "front" o "back"
+        if (isFront || isBack) {
+            QColor labelColor = isFront ? QColor("#307060") : QColor("#508030");
             p.setPen(labelColor);
             p.setFont(QFont("Segoe UI", 8, QFont::Bold));
             p.drawText(QRect(x, START_Y - 20, NODE_W, 16),
                        Qt::AlignCenter,
-                       isBoth ? "head/tail" : isHead ? "head" : "tail");
+                       isFront ? "front" : "back");
         }
 
         // Nodo
@@ -91,13 +87,13 @@ void LinkedListWidget::paintEvent(QPaintEvent*) {
                    Qt::AlignCenter,
                    QString::number(curr->value));
 
-        // Flecha o nullptr
+        // Flecha o badge nullptr
         if (curr->next) {
             int arrowY = START_Y + NODE_H / 2;
             int arrowStartX = x + NODE_W + 4;
             int arrowEndX = x + NODE_W + GAP - 4;
 
-            QColor arrowColor("#7a50b0");
+            QColor arrowColor("#40a870");
             p.setPen(QPen(arrowColor, 4, Qt::SolidLine, Qt::RoundCap));
             p.drawLine(arrowStartX, arrowY, arrowEndX - 11, arrowY);
 
@@ -110,22 +106,22 @@ void LinkedListWidget::paintEvent(QPaintEvent*) {
             p.drawPolygon(arrow);
 
         } else {
-            int nullY = START_Y + NODE_H / 2;
+            int arrowY = START_Y + NODE_H / 2;
             int badgeX = x + NODE_W + 8;
-            int badgeY = nullY - 10;
+            int badgeY = arrowY - 10;
             int badgeW = 52;
             int badgeH = 20;
 
-            QColor arrowColor("#7a50b0");
+            QColor arrowColor("#40a870");
             p.setPen(QPen(arrowColor, 4, Qt::SolidLine, Qt::RoundCap));
-            p.drawLine(x + NODE_W + 4, nullY, badgeX, nullY);
+            p.drawLine(x + NODE_W + 4, arrowY, badgeX, arrowY);
 
             // Badge
-            p.setBrush(QColor("#ddd0f0"));
-            p.setPen(QPen(QColor("#9878d0"), 1.5));
+            p.setBrush(QColor("#d0f0e0"));
+            p.setPen(QPen(QColor("#60b890"), 1.5));
             p.drawRoundedRect(badgeX, badgeY, badgeW, badgeH, 6, 6);
 
-            p.setPen(QColor("#6a4f90"));
+            p.setPen(QColor("#306050"));
             p.setFont(QFont("Segoe UI", 8, QFont::StyleItalic));
             p.drawText(QRect(badgeX, badgeY, badgeW, badgeH),
                        Qt::AlignCenter, "nullptr");
@@ -133,6 +129,5 @@ void LinkedListWidget::paintEvent(QPaintEvent*) {
 
         x += NODE_W + GAP;
         curr = curr->next;
-        i++;
     }
 }

@@ -1,14 +1,13 @@
 #pragma once
 #include <QWidget>
-#include <QTimer>
-#include "../logic/LinkedList.h"
+#include "../logic/Queue.h"
 
-// WIDGET DE VISUALIZACIÓN DE LA LISTA
-class LinkedListWidget : public QWidget {
+// WIDGET DE VISUALIZACIÓN DE LA QUEUE
+class QueueWidget : public QWidget {
     Q_OBJECT
 public:
-    explicit LinkedListWidget(QWidget* parent = nullptr);
-    void setList(LinkedList* list);
+    explicit QueueWidget(QWidget* parent = nullptr);
+    void setQueue(Queue* queue);
     void highlightNode(int val);
     void clearHighlight();
 
@@ -16,7 +15,7 @@ protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
-    LinkedList* ll;
+    Queue* q;
     int highlightedVal;
     bool highlightActive;
 

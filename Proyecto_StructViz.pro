@@ -4,15 +4,29 @@ TEMPLATE = app
 CONFIG += c++17
 
 SOURCES += \
+    logic/DoubleLinkedList.cpp \
+    logic/Persistence.cpp \
+    logic/Queue.cpp \
+    logic/Stack.cpp \
     main.cpp \
+    ui/DLLWidget.cpp \
     ui/LinkedListWidget.cpp \
     ui/MainWindow.cpp \
-    logic/LinkedList.cpp
+    logic/LinkedList.cpp \
+    ui/QueueWidget.cpp \
+    ui/StackWidget.cpp
 
 HEADERS += \
+    logic/DoubleLinkedList.h \
     logic/LinkedList.h \
+    logic/Persistence.h \
+    logic/Queue.h \
+    logic/Stack.h \
+    ui/DLLWidget.h \
     ui/LinkedListWidget.h \
-    ui/MainWindow.h
+    ui/MainWindow.h \
+    ui/QueueWidget.h \
+    ui/StackWidget.h
 
 FORMS += \
     ui/MainWindow.ui

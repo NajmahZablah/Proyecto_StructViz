@@ -61,7 +61,7 @@ bool LinkedList::remove(int val) {
         return false;
     }
 
-    if (head->data == val) {
+    if (head->value == val) {
         Node* temp = head;
         head = head->next;
         delete temp;
@@ -70,7 +70,7 @@ bool LinkedList::remove(int val) {
     }
 
     Node* curr = head;
-    while (curr->next && curr->next->data != val) {
+    while (curr->next && curr->next->value != val) {
         curr = curr->next;
     }
 
@@ -91,7 +91,7 @@ bool LinkedList::search(int val) {
     Node* curr = head;
 
     while (curr) {
-        if (curr->data == val) {
+        if (curr->value == val) {
             return true;
         }
         curr = curr->next;
@@ -111,7 +111,7 @@ void LinkedList::traverse() {
     std::cout << "head -> ";
 
     while (curr) {
-        std::cout << "[" << curr->data << "]";
+        std::cout << "[" << curr->value << "]";
         if (curr->next) std::cout << " -> ";
         curr = curr->next;
     }

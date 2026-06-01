@@ -3,34 +3,33 @@
 
 // NODO: unidad mínima de la lista
 struct Node {
-    int data;
+    int value;
     Node* next;
-    Node(int val) : data(val), next(nullptr) {}
+    Node(int val) : value(val), next(nullptr) {}
 };
 
 // LISTA ENLAZADA SIMPLE
-// Implementación propia sin usar std:: ni Qt
 class LinkedList {
 public:
     LinkedList();
     ~LinkedList();
 
-    // -Inserción-
+    // Inserción
     void insertAtHead(int val); // O(1)
     void insertAtTail(int val); // 0(n)
     void insertAt(int index, int val); // O(n)
 
-    // -Eliminación-
+    // Eliminación
     bool remove(int val);
 
-    // - Búsqueda-
+    // Búsqueda
     bool search(int val);
 
-    // -Utilidades-
+    // Utilidades
     void traverse();
     void clear();
 
-    // -Accesores-
+    // Accesores
     Node* getHead() const;
     int size() const;
 
