@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>580</height>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>960</width>
-     <height>580</height>
+     <height>620</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="mainLayout">
@@ -31,218 +31,109 @@
      <number>8</number>
     </property>
 
+    <!-- BARRA SUPERIOR -->
     <item>
      <layout class="QHBoxLayout" name="topBarLayout">
       <item>
        <widget class="QPushButton" name="btnSave">
-        <property name="text">
-         <string>🍪 Guardar</string>
-        </property>
-        <property name="maximumWidth">
-         <number>110</number>
-        </property>
+        <property name="text"><string>🍪 Guardar</string></property>
+        <property name="maximumWidth"><number>110</number></property>
        </widget>
       </item>
       <item>
        <spacer>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
        </spacer>
       </item>
       <item>
        <widget class="QLabel" name="lblTitulo">
-        <property name="text">
-         <string>StructViz</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
+        <property name="text"><string>StructViz</string></property>
+        <property name="alignment"><set>Qt::AlignCenter</set></property>
        </widget>
       </item>
       <item>
        <spacer>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
        </spacer>
       </item>
       <item>
        <widget class="QPushButton" name="btnLoad">
-        <property name="text">
-         <string>🍰 Cargar</string>
-        </property>
-        <property name="maximumWidth">
-         <number>110</number>
-        </property>
+        <property name="text"><string>🍰 Cargar</string></property>
+        <property name="maximumWidth"><number>110</number></property>
        </widget>
       </item>
      </layout>
     </item>
 
+    <!-- TABS -->
     <item>
      <widget class="QTabWidget" name="tabWidget">
 
+      <!-- TAB: LISTA ENLAZADA -->
       <widget class="QWidget" name="tabLL">
-       <attribute name="title">
-        <string>Lista Enlazada</string>
-       </attribute>
+       <attribute name="title"><string>Lista Enlazada</string></attribute>
        <layout class="QVBoxLayout" name="llLayout">
-        <item>
-         <widget class="LinkedListWidget" name="llDisplay"/>
-        </item>
+        <item><widget class="LinkedListWidget" name="llDisplay"/></item>
         <item>
          <widget class="QLabel" name="llSize">
-          <property name="text">
-           <string>Tamaño: 0 nodos</string>
-          </property>
+          <property name="text"><string>Tamaño: 0 nodos</string></property>
          </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="llInputLayout">
           <item>
            <widget class="QLineEdit" name="llInputValue">
-            <property name="placeholderText">
-             <string>Valor (entero)</string>
-            </property>
+            <property name="placeholderText"><string>Valor (entero)</string></property>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="llInputIndex">
-            <property name="placeholderText">
-             <string>Índice (opcional)</string>
-            </property>
+            <property name="placeholderText"><string>Índice (opcional)</string></property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="llButtonLayout">
-          <item>
-           <widget class="QPushButton" name="llBtnInsertHead">
-            <property name="text">
-             <string>Insertar head</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="llBtnInsertTail">
-            <property name="text">
-             <string>Insertar tail</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="llBtnInsertAt">
-            <property name="text">
-             <string>Insertar en posición</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="llBtnRemove">
-            <property name="text">
-             <string>Eliminar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="llBtnSearch">
-            <property name="text">
-             <string>Buscar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="llBtnClear">
-            <property name="text">
-             <string>Limpiar</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QPushButton" name="llBtnInsertHead"><property name="text"><string>Insertar head</string></property></widget></item>
+          <item><widget class="QPushButton" name="llBtnInsertTail"><property name="text"><string>Insertar tail</string></property></widget></item>
+          <item><widget class="QPushButton" name="llBtnInsertAt"><property name="text"><string>Insertar en posición</string></property></widget></item>
+          <item><widget class="QPushButton" name="llBtnRemove"><property name="text"><string>Eliminar</string></property></widget></item>
+          <item><widget class="QPushButton" name="llBtnSearch"><property name="text"><string>Buscar</string></property></widget></item>
+          <item><widget class="QPushButton" name="llBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
          </layout>
         </item>
         <item>
          <widget class="QLabel" name="llStatus">
-          <property name="text">
-           <string>Listo</string>
-          </property>
+          <property name="text"><string>Listo</string></property>
          </widget>
         </item>
        </layout>
       </widget>
 
+      <!-- TAB: STACK -->
       <widget class="QWidget" name="tabStack">
-       <attribute name="title">
-        <string>Stack</string>
-       </attribute>
+       <attribute name="title"><string>Stack</string></attribute>
        <layout class="QHBoxLayout" name="stackOuterLayout">
         <item>
          <widget class="StackWidget" name="stackDisplay">
           <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>300</height>
-           </size>
+           <size><width>200</width><height>300</height></size>
           </property>
          </widget>
         </item>
         <item>
          <layout class="QVBoxLayout" name="stackControlLayout">
-          <item>
-           <widget class="QLabel" name="stackSize">
-            <property name="text">
-             <string>Tamaño: 0 nodos</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="stackInputValue">
-            <property name="placeholderText">
-             <string>Valor (entero)</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stackBtnPush">
-            <property name="text">
-             <string>Push</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stackBtnPop">
-            <property name="text">
-             <string>Pop</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stackBtnPeek">
-            <property name="text">
-             <string>Peek</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stackBtnClear">
-            <property name="text">
-             <string>Limpiar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="stackStatus">
-            <property name="text">
-             <string>Listo</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QLabel" name="stackSize"><property name="text"><string>Tamaño: 0 nodos</string></property></widget></item>
+          <item><widget class="QLineEdit" name="stackInputValue"><property name="placeholderText"><string>Valor (entero)</string></property></widget></item>
+          <item><widget class="QPushButton" name="stackBtnPush"><property name="text"><string>Push</string></property></widget></item>
+          <item><widget class="QPushButton" name="stackBtnPop"><property name="text"><string>Pop</string></property></widget></item>
+          <item><widget class="QPushButton" name="stackBtnPeek"><property name="text"><string>Peek</string></property></widget></item>
+          <item><widget class="QPushButton" name="stackBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
+          <item><widget class="QLabel" name="stackStatus"><property name="text"><string>Listo</string></property></widget></item>
           <item>
            <spacer>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
            </spacer>
           </item>
          </layout>
@@ -250,167 +141,128 @@
        </layout>
       </widget>
 
+      <!-- TAB: QUEUE -->
       <widget class="QWidget" name="tabQueue">
-       <attribute name="title">
-        <string>Queue</string>
-       </attribute>
+       <attribute name="title"><string>Queue</string></attribute>
        <layout class="QVBoxLayout" name="queueLayout">
-        <item>
-         <widget class="QueueWidget" name="queueDisplay"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="queueSize">
-          <property name="text">
-           <string>Tamaño: 0 nodos</string>
-          </property>
-         </widget>
-        </item>
+        <item><widget class="QueueWidget" name="queueDisplay"/></item>
+        <item><widget class="QLabel" name="queueSize"><property name="text"><string>Tamaño: 0 nodos</string></property></widget></item>
         <item>
          <layout class="QHBoxLayout" name="queueInputLayout">
-          <item>
-           <widget class="QLineEdit" name="queueInputValue">
-            <property name="placeholderText">
-             <string>Valor (entero)</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QLineEdit" name="queueInputValue"><property name="placeholderText"><string>Valor (entero)</string></property></widget></item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="queueButtonLayout">
-          <item>
-           <widget class="QPushButton" name="queueBtnEnqueue">
-            <property name="text">
-             <string>Enqueue</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="queueBtnDequeue">
-            <property name="text">
-             <string>Dequeue</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="queueBtnPeek">
-            <property name="text">
-             <string>Peek</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="queueBtnRear">
-            <property name="text">
-             <string>Rear</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="queueBtnClear">
-            <property name="text">
-             <string>Limpiar</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QPushButton" name="queueBtnEnqueue"><property name="text"><string>Enqueue</string></property></widget></item>
+          <item><widget class="QPushButton" name="queueBtnDequeue"><property name="text"><string>Dequeue</string></property></widget></item>
+          <item><widget class="QPushButton" name="queueBtnPeek"><property name="text"><string>Peek</string></property></widget></item>
+          <item><widget class="QPushButton" name="queueBtnRear"><property name="text"><string>Rear</string></property></widget></item>
+          <item><widget class="QPushButton" name="queueBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
          </layout>
         </item>
-        <item>
-         <widget class="QLabel" name="queueStatus">
-          <property name="text">
-           <string>Listo</string>
-          </property>
-         </widget>
-        </item>
+        <item><widget class="QLabel" name="queueStatus"><property name="text"><string>Listo</string></property></widget></item>
        </layout>
       </widget>
 
+      <!-- TAB: DOUBLE LINKED LIST -->
       <widget class="QWidget" name="tabDLL">
-       <attribute name="title">
-        <string>Double Linked List</string>
-       </attribute>
+       <attribute name="title"><string>Double Linked List</string></attribute>
        <layout class="QVBoxLayout" name="dllLayout">
-        <item>
-         <widget class="DLLWidget" name="dllDisplay"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="dllSize">
-          <property name="text">
-           <string>Tamaño: 0 nodos</string>
-          </property>
-         </widget>
-        </item>
+        <item><widget class="DLLWidget" name="dllDisplay"/></item>
+        <item><widget class="QLabel" name="dllSize"><property name="text"><string>Tamaño: 0 nodos</string></property></widget></item>
         <item>
          <layout class="QHBoxLayout" name="dllInputLayout">
-          <item>
-           <widget class="QLineEdit" name="dllInputValue">
-            <property name="placeholderText">
-             <string>Valor (entero)</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="dllInputIndex">
-            <property name="placeholderText">
-             <string>Índice (opcional)</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QLineEdit" name="dllInputValue"><property name="placeholderText"><string>Valor (entero)</string></property></widget></item>
+          <item><widget class="QLineEdit" name="dllInputIndex"><property name="placeholderText"><string>Índice (opcional)</string></property></widget></item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="dllButtonLayout">
-          <item>
-           <widget class="QPushButton" name="dllBtnInsertHead">
-            <property name="text">
-             <string>Insertar head</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dllBtnInsertTail">
-            <property name="text">
-             <string>Insertar tail</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dllBtnInsertAt">
-            <property name="text">
-             <string>Insertar en posición</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dllBtnRemove">
-            <property name="text">
-             <string>Eliminar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dllBtnSearch">
-            <property name="text">
-             <string>Buscar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dllBtnClear">
-            <property name="text">
-             <string>Limpiar</string>
-            </property>
-           </widget>
-          </item>
+          <item><widget class="QPushButton" name="dllBtnInsertHead"><property name="text"><string>Insertar head</string></property></widget></item>
+          <item><widget class="QPushButton" name="dllBtnInsertTail"><property name="text"><string>Insertar tail</string></property></widget></item>
+          <item><widget class="QPushButton" name="dllBtnInsertAt"><property name="text"><string>Insertar en posición</string></property></widget></item>
+          <item><widget class="QPushButton" name="dllBtnRemove"><property name="text"><string>Eliminar</string></property></widget></item>
+          <item><widget class="QPushButton" name="dllBtnSearch"><property name="text"><string>Buscar</string></property></widget></item>
+          <item><widget class="QPushButton" name="dllBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
+         </layout>
+        </item>
+        <item><widget class="QLabel" name="dllStatus"><property name="text"><string>Listo</string></property></widget></item>
+       </layout>
+      </widget>
+
+      <!-- TAB: BST -->
+      <widget class="QWidget" name="tabBST">
+       <attribute name="title"><string>BST</string></attribute>
+       <layout class="QVBoxLayout" name="bstLayout">
+        <item><widget class="BSTWidget" name="bstDisplay"/></item>
+        <item><widget class="QLabel" name="bstSize"><property name="text"><string>Tamaño: 0 nodos</string></property></widget></item>
+        <item>
+         <layout class="QHBoxLayout" name="bstInputLayout">
+          <item><widget class="QLineEdit" name="bstInputValue"><property name="placeholderText"><string>Valor (entero)</string></property></widget></item>
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="dllStatus">
-          <property name="text">
-           <string>Listo</string>
-          </property>
+         <layout class="QHBoxLayout" name="bstButtonLayout">
+          <item><widget class="QPushButton" name="bstBtnInsert"><property name="text"><string>Insertar</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnRemove"><property name="text"><string>Eliminar</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnSearch"><property name="text"><string>Buscar</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnConvert"><property name="text"><string>🔄 Convertir a AVL</string></property></widget></item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="bstTraversalLayout">
+          <item><widget class="QPushButton" name="bstBtnInorder"><property name="text"><string>Inorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnPreorder"><property name="text"><string>Preorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnPostorder"><property name="text"><string>Postorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnSuccessor"><property name="text"><string>Sucesor</string></property></widget></item>
+          <item><widget class="QPushButton" name="bstBtnPredecessor"><property name="text"><string>Predecesor</string></property></widget></item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="bstTraversalResult">
+          <property name="text"><string></string></property>
          </widget>
         </item>
+        <item><widget class="QLabel" name="bstStatus"><property name="text"><string>Listo</string></property></widget></item>
+       </layout>
+      </widget>
+
+      <!-- TAB: AVL -->
+      <widget class="QWidget" name="tabAVL">
+       <attribute name="title"><string>AVL</string></attribute>
+       <layout class="QVBoxLayout" name="avlLayout">
+        <item><widget class="AVLWidget" name="avlDisplay"/></item>
+        <item><widget class="QLabel" name="avlSize"><property name="text"><string>Tamaño: 0 nodos</string></property></widget></item>
+        <item>
+         <layout class="QHBoxLayout" name="avlInputLayout">
+          <item><widget class="QLineEdit" name="avlInputValue"><property name="placeholderText"><string>Valor (entero)</string></property></widget></item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="avlButtonLayout">
+          <item><widget class="QPushButton" name="avlBtnInsert"><property name="text"><string>Insertar</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnRemove"><property name="text"><string>Eliminar</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnSearch"><property name="text"><string>Buscar</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnClear"><property name="text"><string>Limpiar</string></property></widget></item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="avlTraversalLayout">
+          <item><widget class="QPushButton" name="avlBtnInorder"><property name="text"><string>Inorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnPreorder"><property name="text"><string>Preorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnPostorder"><property name="text"><string>Postorder</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnSuccessor"><property name="text"><string>Sucesor</string></property></widget></item>
+          <item><widget class="QPushButton" name="avlBtnPredecessor"><property name="text"><string>Predecesor</string></property></widget></item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="avlTraversalResult">
+          <property name="text"><string></string></property>
+         </widget>
+        </item>
+        <item><widget class="QLabel" name="avlStatus"><property name="text"><string>Listo</string></property></widget></item>
        </layout>
       </widget>
 
@@ -441,6 +293,16 @@
    <class>DLLWidget</class>
    <extends>QWidget</extends>
    <header location="global">DLLWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BSTWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">BSTWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AVLWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">AVLWidget.h</header>
   </customwidget>
  </customwidgets>
 

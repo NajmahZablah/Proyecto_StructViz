@@ -1,184 +1,174 @@
 #include "Persistence.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
 #include <vector>
 
+// HELPERS BINARIOS
+// Escribe un int como 4 bytes en el archivo
+void Persistence::writeInt(std::ofstream& file, int val) {
+    file.write(reinterpret_cast<const char*>(&val), sizeof(int));
+}
+
+// Lee 4 bytes del archivo y los interpreta como int
+bool Persistence::readInt(std::ifstream& file, int& val) {
+    file.read(reinterpret_cast<char*>(&val), sizeof(int));
+    return file.gcount() == sizeof(int);
+}
+
+// HELPERS DE ÁRBOLES
+void Persistence::saveBSTPreorder(std::ofstream& file, BSTNode* node) {
+    if (node == nullptr) {
+        return;
+    }
+    writeInt(file, node->value);
+    saveBSTPreorder(file, node->left);
+    saveBSTPreorder(file, node->right);
+}
+
+void Persistence::saveAVLPreorder(std::ofstream& file, AVLNode* node) {
+    if (node == nullptr) {
+        return;
+    }
+    writeInt(file, node->value);
+    saveAVLPreorder(file, node->left);
+    saveAVLPreorder(file, node->right);
+}
+
 // SAVE
+// Estructura del archivo:
+//   [código sección] [val1] [val2] ... [SENTINEL]
 bool Persistence::save(const std::string& filename,
                        LinkedList* ll,
                        Stack* stack,
                        Queue* queue,
-                       DoubleLinkedList* dll)
+                       DoubleLinkedList* dll,
+                       BST* bst,
+                       AVL* avl)
 {
-    std::ofstream file(filename);
+    std::ofstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "No se pudo abrir el archivo para guardar: " << filename << std::endl;
         return false;
     }
 
     // LISTA ENLAZADA
-    file << "LL\n";
-    if (!ll->getHead()) {
-        file << "null\n";
-    } else {
-        Node* curr = ll->getHead();
-        while (curr) {
-            file << curr->value;
-            if (curr->next) {
-                file << " -> ";
-            }
-            curr = curr->next;
-        }
-        file << " -> null\n";
+    writeInt(file, SECTION_LL);
+    Node* currLL = ll->getHead();
+    while (currLL) {
+        writeInt(file, currLL->value);
+        currLL = currLL->next;
     }
+    writeInt(file, SENTINEL);
 
     // STACK
-    file << "\nSTACK\n";
-    if (stack->isEmpty()) {
-        file << "null\n";
-    } else {
-        Node* curr = stack->getTop();
-        while (curr) {
-            file << curr->value;
-            if (curr->next) {
-                file << " -> ";
-            }
-            curr = curr->next;
-        }
-        file << " -> null\n";
+    writeInt(file, SECTION_STACK);
+    Node* currSt = stack->getTop();
+    while (currSt) {
+        writeInt(file, currSt->value);
+        currSt = currSt->next;
     }
+    writeInt(file, SENTINEL);
 
     // QUEUE
-    file << "\nQUEUE\n";
-    if (queue->isEmpty()) {
-        file << "null\n";
-    } else {
-        Node* curr = queue->getFront();
-        while (curr) {
-            file << curr->value;
-            if (curr->next) {
-                file << " -> ";
-            }
-            curr = curr->next;
-        }
-        file << " -> null\n";
+    writeInt(file, SECTION_QUEUE);
+    Node* currQ = queue->getFront();
+    while (currQ) {
+        writeInt(file, currQ->value);
+        currQ = currQ->next;
     }
+    writeInt(file, SENTINEL);
 
-    // LISTA DOBLEMENTE ENLAZADA
-    file << "\nDLL\n";
-    if (dll->isEmpty()) {
-        file << "null\n";
-    } else {
-        file << "null <- ";
-        DNode* curr = dll->getHead();
-        while (curr) {
-            file << curr->value;
-            if (curr->next) {
-                file << " <-> ";
-            }
-            curr = curr->next;
-        }
-        file << " -> null\n";
+    // DOUBLE LINKED LIST
+    writeInt(file, SECTION_DLL);
+    DNode* currDLL = dll->getHead();
+    while (currDLL) {
+        writeInt(file, currDLL->value);
+        currDLL = currDLL->next;
     }
+    writeInt(file, SENTINEL);
+
+    // BST
+    writeInt(file, SECTION_BST);
+    saveBSTPreorder(file, bst->getRoot());
+    writeInt(file, SENTINEL);
+
+    // AVL
+    writeInt(file, SECTION_AVL);
+    saveAVLPreorder(file, avl->getRoot());
+    writeInt(file, SENTINEL);
 
     file.close();
     return true;
 }
 
 // LOAD
+// Lee sección por sección hasta el SENTINEL
+// luego inserta los valores en la estructura correspondiente
 bool Persistence::load(const std::string& filename,
                        LinkedList* ll,
                        Stack* stack,
                        Queue* queue,
-                       DoubleLinkedList* dll)
+                       DoubleLinkedList* dll,
+                       BST* bst,
+                       AVL* avl)
 {
-    std::ifstream file(filename);
+    std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "No se pudo abrir el archivo para cargar: " << filename << std::endl;
         return false;
     }
 
+    // Limpiar todas las estructuras antes de cargar
     ll->clear();
     stack->clear();
     queue->clear();
     dll->clear();
+    bst->clear();
+    avl->clear();
 
-    std::string line;
-    std::string section = "";
+    int val;
 
-    while (std::getline(file, line)) {
-        if (line == "LL") {
-            section = "LL";
-            continue;
-        }
+    // Leer sección por sección
+    while (readInt(file, val)) {
+        int section = val;
 
-        if (line == "STACK") {
-            section = "STACK";
-            continue;
-        }
-
-        if (line == "QUEUE") {
-            section = "QUEUE";
-            continue;
-        }
-
-        if (line == "DLL") {
-            section = "DLL";
-            continue;
-        }
-
-        if (line.empty()) {
-            continue;
-        }
-
-        if (line == "null") {
-            continue;
-        }
-
-        std::string clean = line;
-
-        if (clean.substr(0, 8) == "null <- ") {
-            clean = clean.substr(8);
-        }
-
-        std::string suffix = " -> null";
-        if (clean.size() >= suffix.size() &&
-            clean.substr(clean.size() - suffix.size()) == suffix) {
-            clean = clean.substr(0, clean.size() - suffix.size());
-        }
-
-        std::string sep = (section == "DLL") ? " <-> " : " -> ";
-        std::string result = "";
-        size_t pos = 0;
-        while ((pos = clean.find(sep)) != std::string::npos) {
-            result += clean.substr(0, pos) + " ";
-            clean = clean.substr(pos + sep.size());
-        }
-        result += clean;
-
-        std::istringstream ss(result);
-        int val;
-
-        if (section == "LL") {
-            while (ss >> val) {
+        if (section == SECTION_LL) {
+            while (readInt(file, val) && val != SENTINEL) {
                 ll->insertAtTail(val);
             }
-        } else if (section == "STACK") {
+        }
+
+        else if (section == SECTION_STACK) {
             std::vector<int> vals;
-            while (ss >> val) {
+            while (readInt(file, val) && val != SENTINEL) {
                 vals.push_back(val);
             }
             for (int i = (int)vals.size() - 1; i >= 0; i--) {
                 stack->push(vals[i]);
             }
-        } else if (section == "QUEUE") {
-            while (ss >> val) {
+        }
+
+        else if (section == SECTION_QUEUE) {
+            while (readInt(file, val) && val != SENTINEL) {
                 queue->enqueue(val);
             }
-        } else if (section == "DLL") {
-            while (ss >> val) {
+        }
+
+        else if (section == SECTION_DLL) {
+            while (readInt(file, val) && val != SENTINEL) {
                 dll->insertAtTail(val);
+            }
+        }
+
+        else if (section == SECTION_BST) {
+            while (readInt(file, val) && val != SENTINEL) {
+                bst->insert(val);
+            }
+        }
+
+        else if (section == SECTION_AVL) {
+            while (readInt(file, val) && val != SENTINEL) {
+                avl->insert(val);
             }
         }
     }
