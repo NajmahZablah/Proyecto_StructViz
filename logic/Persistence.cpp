@@ -1,7 +1,6 @@
 #include "Persistence.h"
 #include <fstream>
 #include <iostream>
-#include <vector>
 
 // HELPERS BINARIOS
 // Escribe un int como 4 bytes en el archivo
@@ -139,12 +138,21 @@ bool Persistence::load(const std::string& filename,
         }
 
         else if (section == SECTION_STACK) {
-            std::vector<int> vals;
+            // El archivo guarda los valores recorriendo desde el top hacia
+            // la base. Si los insertáramos con push() en ese mismo orden,
+            // el stack quedaría invertido. Por eso los guardamos primero
+            // en un arreglo de tamaño fijo y luego los empujamos en
+            // reversa para preservar el orden original top -> base.
+            int stackVals[MAX_NODES];
+            int count = 0;
             while (readInt(file, val) && val != SENTINEL) {
-                vals.push_back(val);
+                if (count < MAX_NODES) {
+                    stackVals[count] = val;
+                    count++;
+                }
             }
-            for (int i = (int)vals.size() - 1; i >= 0; i--) {
-                stack->push(vals[i]);
+            for (int i = count - 1; i >= 0; i--) {
+                stack->push(stackVals[i]);
             }
         }
 

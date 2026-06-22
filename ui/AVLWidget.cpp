@@ -275,18 +275,19 @@ void AVLWidget::drawNode(QPainter& p, AVLNode* node, int x, int y,
     int h = node->height - 1;
     int d = avl->depth(avl->getRoot(), node->value);
 
+    QRect hdRect(x - 30, y + NODE_R + 8, 38, 13);
     p.setPen(AVL_META_OK);
-    p.setFont(QFont("Segoe UI", 9));
-    p.drawText(QRect(x - 40, y + NODE_R + 10, 52, 16),
-               Qt::AlignLeft, QString("h:%1 d:%2").arg(h).arg(d));
+    p.setFont(QFont("Segoe UI", 8));
+    p.drawText(hdRect, Qt::AlignLeft, QString("h:%1 d:%2").arg(h).arg(d));
 
     QColor bColor = (balance == 0) ? AVL_META_OK
                     : (balance == 1 || balance == -1) ? AVL_META_WARN
                                                       : QColor("#cc0000");
+
+    QRect bRect(x + 10, y + NODE_R + 8, 22, 13);
     p.setPen(bColor);
-    p.setFont(QFont("Segoe UI", 9, QFont::Bold));
-    p.drawText(QRect(x + 14, y + NODE_R + 10, 30, 16),
-               Qt::AlignLeft, QString("b:%1").arg(balance));
+    p.setFont(QFont("Segoe UI", 8, QFont::Bold));
+    p.drawText(bRect, Qt::AlignLeft, QString("b:%1").arg(balance));
 }
 
 // PAINTEVENT

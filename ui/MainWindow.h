@@ -106,6 +106,7 @@ private:
     int conversionVals[128];
     int conversionTotal;
     int conversionIdx;
+    int conversionExpectedDepth;
 
     void refreshLL();
     void refreshStack();

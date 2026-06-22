@@ -674,7 +674,8 @@ void MainWindow::on_bstBtnPredecessor_clicked() {
         setBSTStatus(QString("(◞‸ ◟)💧 Valor %1 no encontrado.").arg(val), false);
         return;
     }
-    if (!curr->left) { setBSTStatus(QString("(◞‸ ◟)💧 %1 no tiene predecesor.").arg(val), false);
+    if (!curr->left) {
+        setBSTStatus(QString("(◞‸ ◟)💧 %1 no tiene predecesor.").arg(val), false);
         return;
     }
 
@@ -711,15 +712,44 @@ void MainWindow::on_bstBtnConvert_clicked() {
     conversionStep();
 }
 
-// Inserta el siguiente nodo de la conversión y arranca su animación
+// Inserta el siguiente nodo de la conversión, detecta si hubo rotación
+// y arranca su animación
 void MainWindow::conversionStep() {
     if (conversionIdx >= conversionTotal) {
         setAVLStatus(QString("ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧ BST convertido a AVL (%1 nodos).").arg(conversionTotal));
         return;
     }
-    int val = conversionVals[conversionIdx++];
+    int val = conversionVals[conversionIdx];
+    conversionIdx++;
+
+    // Profundidad esperada SI NO hubiera rotación: la cantidad de pasos
+    // que tomaría una búsqueda normal desde la raíz actual hasta llegar
+    // a una posición vacía (igual que en un BST sin rebalanceo).
+    int expectedDepth = 0;
+    AVLNode* curr = avl->getRoot();
+    while (curr) {
+        expectedDepth++;
+        if (val < curr->value) {
+            curr = curr->left;
+        } else {
+            curr = curr->right;
+        }
+    }
+    conversionExpectedDepth = expectedDepth;
+
     avl->insert(val);
     refreshAVL();
+
+    // Si la profundidad real del nodo insertado quedó por debajo de la
+    // esperada, el rebalanceo lo "subió" en el árbol: hubo una rotación.
+    int actualDepth = avl->depth(avl->getRoot(), val);
+    if (actualDepth < conversionExpectedDepth) {
+        setAVLStatus(QString("🔄 Rotación aplicada al insertar %1 (de profundidad %2 a %3).")
+                         .arg(val).arg(conversionExpectedDepth).arg(actualDepth));
+    } else {
+        setAVLStatus(QString("Insertando %1 desde el BST...").arg(val));
+    }
+
     AVLWidget* w = qobject_cast<AVLWidget*>(ui->avlDisplay);
     if (w) {
         w->animateInsertion(val);

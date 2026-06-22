@@ -1,9 +1,6 @@
 #ifndef BST_H
 #define BST_H
 
-#include <string>
-using std::string;
-
 // NODO DEL BST
 struct BSTNode {
     int value;

@@ -278,11 +278,12 @@ void BSTWidget::drawNode(QPainter& p, BSTNode* node, int x, int y,
     int h = bst->height(node);
     int d = bst->depth(bst->getRoot(), node->value);
     int b = bst->balanceFactor(node);
+
+    QRect metaRect(x - 34, y + NODE_R + 8, 68, 13);
     p.setPen(BST_META);
-    p.setFont(QFont("Segoe UI", 9));
-    p.drawText(QRect(x - 44, y + NODE_R + 10, 88, 16),
-               Qt::AlignCenter,
-               QString("h:%1  d:%2  b:%3").arg(h).arg(d).arg(b));
+    p.setFont(QFont("Segoe UI", 8));
+    p.drawText(metaRect, Qt::AlignCenter,
+               QString("h:%1 d:%2 b:%3").arg(h).arg(d).arg(b));
 }
 
 // PAINTEVENT

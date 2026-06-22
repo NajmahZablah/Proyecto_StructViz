@@ -41,6 +41,10 @@ private:
     // Valor de bandera
     static const int SENTINEL = -2147483648; // INT_MIN
 
+    // Tope para arreglos temporales de carga (mismo límite usado
+    // en MainWindow para recorridos: suficiente para este proyecto)
+    static const int MAX_NODES = 1024;
+
     // Helpers para escribir y leer
     static void writeInt(std::ofstream& file, int val);
     static bool readInt(std::ifstream& file, int& val);
