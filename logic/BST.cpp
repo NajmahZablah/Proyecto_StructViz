@@ -32,6 +32,10 @@ BSTNode* BST::insertRecursive(BSTNode* currentRoot, BSTNode* newNode) {
         currentRoot->left = insertRecursive(currentRoot->left, newNode);
     } else if (newNode->value > currentRoot->value) {
         currentRoot->right = insertRecursive(currentRoot->right, newNode);
+    } else {
+        // Valor duplicado: no se inserta. Liberamos newNode para evitar
+        // una fuga de memoria, ya que quedaría sin padre que lo enlace.
+        delete newNode;
     }
 
     return currentRoot;
